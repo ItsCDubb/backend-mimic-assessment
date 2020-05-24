@@ -19,14 +19,15 @@ You can try adding in line breaks around 70 columns so the output looks
 better.
 """
 
-__author__ = "???"
+__author__ = "Chris Warren with help from Cheria Artis"
 
 import random
 import sys
 
 
 def create_mimic_dict(filename):
-    """Returns a dict mapping each word to a list of words which follow it.
+    """
+    Returns a dict mapping each word to a list of words which follow it.
     For example:
         Input: "I am a software developer, and I don't care who knows"
         Output:
@@ -43,23 +44,38 @@ def create_mimic_dict(filename):
                 "who" : ["knows"]
             }
     """
-    # +++your code here+++
-    pass
+    mimic_dict = {}
+    file = open(filename, 'r')
+    text = file.read()
+    file.close()
+    words = text.split()
+    prev_word = ''
+    for word in words:
+        if prev_word not in mimic_dict:
+            mimic_dict[prev_word] = [word]
+        else:
+            mimic_dict[prev_word].append(word)
+        prev_word = word 
+    print (len(mimic_dict.keys()))
 
+    return mimic_dict
 
-def print_mimic(mimic_dict, start_word):
-    """Given a previously created mimic_dict and start_word,
+def print_mimic(mimic_dict, word):
+    """
+    Given a previously created mimic_dict and start word,
     prints 200 random words from mimic_dict as follows:
-        - Print the start_word
-        - Look up the start_word in your mimic_dict and get its next-list
+        - Print the start word
+        - Look up the start word in your mimic_dict and get its next-list
         - Randomly select a new word from the next-list
         - Repeat this process 200 times
     """
-    # +++your code here+++
-    pass
+    values = [word]
+    for i in range(200):
+        word = random.choice(mimic_dict.get(word))
+        values.append(word)
+    print(' '.join(values))
+    return ' '.join(values)
 
-
-# Provided main(), calls mimic_dict() and print_mimic()
 def main():
     if len(sys.argv) != 2:
         print('usage: python mimic.py file-to-read')
