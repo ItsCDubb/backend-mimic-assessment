@@ -45,7 +45,7 @@ def create_mimic_dict(filename):
             }
     """
     mimic_dict = {}
-    with open(filename, 'r') as file:
+    with open(filename) as file:
         text = file.read()
     words = text.split()
     prev_word = ''
